@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+void remove_extra_spaces(const char *input_file_name, const char *output_file_name) {
+    FILE *input_file = fopen(input_file_name, "r");
+    FILE *output_file = fopen(output_file_name, "w");
+
+    if (input_file == NULL || output_file == NULL) {
+        printf("Error.\n");
+        return;
+    }
+
+    char prev_char = ' ';
+    char current_char;
+
+    while ((current_char = fgetc(input_file)) != EOF) {
+        if (!isspace(prev_char) || !isspace(current_char)) {
+            fputc(current_char, output_file);
+        }
+        prev_char = current_char;
+    }
+
+    fclose(input_file);
+    fclose(output_file);
+
+    printf("Extra spaces removed successfully.\n");
+}
+
+int main() {
+    const char *input_file_name = "input.txt";
+    const char *output_file_name = "output.txt";
+
+    remove_extra_spaces(input_file_name, output_file_name);
+
+    return 0;
+}

@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int is_lowercase(const char *password) {
+    for (int i = 0; password[i] != '\0'; i++) {
+        if (islower(password[i])) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int is_uppercase(const char *password) {
+    for (int i = 0; password[i] != '\0'; i++) {
+        if (isupper(password[i])) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int is_digit(const char *password) {
+    for (int i = 0; password[i] != '\0'; i++) {
+        if (isdigit(password[i])) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int is_special_char(const char *password) {
+    const char *special_char = "_,$#@";
+    for (int i = 0; password[i] != '\0'; i++) {
+        if (strchr(special_char, password[i]) != NULL) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void check_password(const char *password) {
+    int lowercase_present = is_lowercase(password);
+    int uppercase_present = is_uppercase(password);
+    int digit_present = is_digit(password);
+    int special_char_present = is_special_char(password);
+
+    if (!lowercase_present) {
+        printf("Lowercase character missing\n");
+    }
+    if (!uppercase_present) {
+        printf("Uppercase character missing\n");
+    }
+    if (!digit_present) {
+        printf("Digit missing\n");
+    }
+    if (!special_char_present) {
+        printf("Special character missing\n");
+    }
+
+    if (lowercase_present && uppercase_present && digit_present && special_char_present) {
+        printf("OK\n");
+    }
+}
+
+int main() {
+    char password[100];
+
+    printf("Input: ");
+    fgets(password, sizeof(password), stdin);
+    
+    if (password[strlen(password) - 1] == '\n') {
+        password[strlen(password) - 1] = '\0';
+    }
+
+    printf("Output:\n");
+    check_password(password);
+
+    return 0;
+}

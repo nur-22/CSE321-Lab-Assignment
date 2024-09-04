@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+int is_updated_email(const char *email) {
+    const char *old_domain = "@kaaj.com";
+    const char *new_domain = "@sheba.xyz";
+
+    
+    const char *at_symbol = strchr(email, '@');
+    if (at_symbol == NULL) {
+        return 0;
+    }
+
+
+    if (strcmp(at_symbol, old_domain) == 0) {
+        return 0;
+    } else if (strcmp(at_symbol, new_domain) == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int main() {
+    char email[100];
+
+    printf("Enter the email address: ");
+    scanf("%s", email);
+
+    if (is_updated_email(email)) {
+        printf("Email address is okay\n");
+    } else {
+        printf("Email address is outdated\n");
+    }
+
+    return 0;
+}
